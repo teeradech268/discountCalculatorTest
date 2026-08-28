@@ -1,0 +1,10 @@
+{
+  "items": [
+    {"name": "T-Shirt", "category": "CLOTHING", "unitPrice": 350},
+    {"name": "Hat", "category": "ACCESSORIES", "unitPrice": 250},
+    {"name": "Belt", "category": "ACCESSORIES", "unitPrice": 230}
+  ],
+  "campaigns": [
+    {"type": "POINTS_ON_TOP", "points": 68}
+  ]
+}

@@ -1,0 +1,43 @@
+meta {
+  name: 1 - Fixed Amount Coupon
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/discount/calculate
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "items": [
+      {
+        "name": "T-Shirt",
+        "category": "CLOTHING",
+        "unitPrice": 350
+      },
+      {
+        "name": "Hat",
+        "category": "ACCESSORIES",
+        "unitPrice": 250
+      }
+    ],
+    "campaigns": [
+      {
+        "type": "FIXED_AMOUNT_COUPON",
+        "amount": 50
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.totalPrice: eq 550.0
+}

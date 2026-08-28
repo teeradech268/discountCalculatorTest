@@ -1,0 +1,34 @@
+meta {
+  name: 3 - Category On Top
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/discount/calculate
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "items": [
+      {"name": "T-Shirt", "category": "CLOTHING", "unitPrice": 350},
+      {"name": "Hoodie", "category": "CLOTHING", "unitPrice": 700},
+      {"name": "Watch", "category": "ELECTRONICS", "unitPrice": 850},
+      {"name": "Bag", "category": "ACCESSORIES", "unitPrice": 640}
+    ],
+    "campaigns": [
+      {"type": "CATEGORY_PERCENTAGE_ON_TOP", "category": "CLOTHING", "percentage": 15}
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.totalPrice: eq 2382.5
+}

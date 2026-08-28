@@ -1,0 +1,35 @@
+meta {
+  name: 6 - Combined Coupon+OnTop+Seasonal
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/api/discount/calculate
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "items": [
+      {"name": "T-Shirt", "category": "CLOTHING", "unitPrice": 350},
+      {"name": "Hat", "category": "ACCESSORIES", "unitPrice": 250},
+      {"name": "Belt", "category": "ACCESSORIES", "unitPrice": 230}
+    ],
+    "campaigns": [
+      {"type": "SEASONAL", "every": 300, "discount": 40},
+      {"type": "POINTS_ON_TOP", "points": 68},
+      {"type": "FIXED_AMOUNT_COUPON", "amount": 50}
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.totalPrice: eq 632.0
+}

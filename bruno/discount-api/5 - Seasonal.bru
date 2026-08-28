@@ -1,0 +1,33 @@
+meta {
+  name: 5 - Seasonal
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/api/discount/calculate
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "items": [
+      {"name": "T-Shirt", "category": "CLOTHING", "unitPrice": 350},
+      {"name": "Hat", "category": "ACCESSORIES", "unitPrice": 250},
+      {"name": "Belt", "category": "ACCESSORIES", "unitPrice": 230}
+    ],
+    "campaigns": [
+      {"type": "SEASONAL", "every": 300, "discount": 40}
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.totalPrice: eq 750.0
+}

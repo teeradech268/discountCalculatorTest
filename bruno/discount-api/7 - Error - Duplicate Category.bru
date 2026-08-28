@@ -1,0 +1,31 @@
+meta {
+  name: 7 - Error - Duplicate Category
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/api/discount/calculate
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "items": [
+      {"name": "T-Shirt", "category": "CLOTHING", "unitPrice": 350}
+    ],
+    "campaigns": [
+      {"type": "FIXED_AMOUNT_COUPON", "amount": 50},
+      {"type": "PERCENTAGE_COUPON", "percentage": 10}
+    ]
+  }
+}
+
+assert {
+  res.status: eq 400
+}
